@@ -3,8 +3,8 @@ import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 
 export default function CustomCursor() {
-  const cursorRef = useRef(null);
-  const cursorBorderRef = useRef(null);
+  const cursorRef = useRef<HTMLDivElement | null>(null);
+  const cursorBorderRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(max-width: 768px)").matches) return;
@@ -19,7 +19,7 @@ export default function CustomCursor() {
     const xToBorder = gsap.quickTo(cursorBorder, "x", { duration: 0.5, ease: "power3.out" });
     const yToBorder = gsap.quickTo(cursorBorder, "y", { duration: 0.5, ease: "power3.out" });
 
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       xTo(e.clientX);
       yTo(e.clientY);
       xToBorder(e.clientX);
@@ -45,7 +45,10 @@ export default function CustomCursor() {
     };
   }, []);
 
-  if (typeof window !== "undefined" && window.matchMedia("(max-width: 768px)").matches) {
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 768px)").matches
+  ) {
     return null;
   }
 
@@ -57,11 +60,11 @@ export default function CustomCursor() {
         className="fixed top-0 left-0 w-1.5 h-1.5 bg-white rounded-full pointer-events-none "
         style={{ zIndex: 99999 }}
       />
-      
+
       { }
       <div
         ref={cursorBorderRef}
-        className="fixed top-0 left-0 w-[27px] h-[27px] border border-white rounded-full pointer-events-none  opacity-50"
+        className="fixed top-0 left-0 w-[27px] h-[27px] border border-white rounded-full pointer-events-none opacity-50"
         style={{ zIndex: 99998 }}
       />
     </>
